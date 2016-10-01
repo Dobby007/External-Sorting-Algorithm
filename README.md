@@ -66,3 +66,8 @@ Below is a quote from the URL above (also it can be found in the `book` folder o
 
     At each pass we process N records, so the complexity is O(Nlog(N/M))
 
+
+License
+====
+
+MIT
