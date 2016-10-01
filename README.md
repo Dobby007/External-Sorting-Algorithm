@@ -1,5 +1,19 @@
-# External-Sorting-Algorithm
-External sorting algorithm written in C# that can be used for sorting of big files that don't fit into RAM
+# External Sorting Algorithm
+External sorting algorithm written in C# that can be used for sorting of big files that don't fit into RAM. This specific .NET application sorts files with the following format:
+
+    1. Apple
+    415. Apple
+    2. Banana is yellow
+    32. Cherry is the best
+    30432. Something something something
+
+First it compares the string part of records and in the case of their equality it compares numbers related to each string. The output  file in the example above will be:
+
+    1. Apple
+    415. Apple
+    2. Banana is yellow
+    32. Cherry is the best
+    30432. Something something something
 
 This algorithm uses two-way merging, described here:
 http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#analysis
