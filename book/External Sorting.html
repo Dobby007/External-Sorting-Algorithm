@@ -1,0 +1,264 @@
+
+<!-- saved from url=(0092)http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#basic -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+ </head><body link="darkblue" vlink="purple" bgcolor="#660000">"Verdana"
+<meta name="Generator" content="Microsoft Word 97">
+<title>External Sorting</title>
+<meta name="Template" content="C:\PROGRAM FILES\MICROSOFT OFFICE\OFFICE\html.dot">
+
+
+
+<font face="Arial" size="2">
+
+<table align="CENTER" cellspacing="0" border="0" cellpadding="7" width="750" background="./External Sorting_files/background.gif">
+<tbody><tr><td align="right">
+<b><p align="right">CmSc 250  Intro to Algorithms</p></b>
+<hr color="navy">
+
+</td></tr>
+<tr><td>
+
+
+<dir>
+<font face="Verdana" size="4" color="navy"><p>
+<b>External Sorting</b></p>
+</font>
+<font face="Verdana" size="2">
+<b>
+<ol>
+
+<li><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#char">Characteristics</a></li>
+<li><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#gen">General strategy - Sort-Merge</a></li>
+<li><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#basic">Basic Algorithm - two-way merge</a></li>
+<ul>
+	<li><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSortEX1.htm">Example</a></li>
+</ul>
+<li><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#analysis">Analysis of two-way merge</a></li>
+<li><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#multi">Multi-way merge</a></li>
+<ul>
+	<li><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSortEX2.htm">Example</a></li>
+</ul>
+</ol>
+	
+</b><p><b><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#goals">Learning Goals</a><br>
+   
+</b>
+</p></font></dir><font face="Verdana" size="2">
+<hr color="purple">
+<dir>
+
+<!----------------------------------------------------->
+
+
+<ol>
+<a name="#char">
+<p><b><font size="4" color="navy">
+</font></b></p><li><b><font size="4" color="navy">Characteristics<p></p></font></b></li>
+<ol>
+
+<li>Processing large files, unable to fit into the main memory</li>
+<li>Restrictions on the access, depending on the external storage medium </li>
+<li>Primary costs – for input-output</li>
+<li>Main concern: minimize the number of times each piece 
+of data is moved <br>
+between the external storage and the main 
+memory.</li></ol>
+<!------------------------------------------>
+</a><a name="#gen">
+<p><b><font size="4" color="navy">
+</font></b></p><li><b><font size="4" color="navy">General strategy - Sort-Merge<p></p></font></b></li>
+
+<ul>
+<li>Break the file into blocks about the size of the internal memory </li>
+<li>Sort these blocks </li>
+<li>Merge sorted blocks </li></ul>
+<dir>
+<dir>
+
+<p>Usually several passes are needed, creating  larger sorted blocks <br>
+until the whole file is sorted</p>
+</dir>
+</dir>
+<!------------------------------------------>
+</a><a name="#basic">
+<p><b><font size="4" color="navy">
+</font></b></p><li><b><font size="4" color="navy">
+Basic Algorithm<p></p></font></b></li>
+
+<p><b>Assumptions</b>: <br>
+four  tapes: <br></p><dir>
+two  for input - Ta1, Ta2, <br>
+two for output - Tb1, Tb2. <p></p>
+</dir>
+Initially the file is on Ta1.<p></p>
+<dir>
+
+<p><b>N</b> records on Ta1<br>
+<b>M</b> records can fit in the memory</p>
+</dir>
+
+<b></b><p><b>Step 1:</b> Break the file into blocks of size <b>M, [N/M]+1</b> blocks</p>
+<b></b><p><b>Step 2:</b> Sorting the blocks:</p>
+
+<ul><dir>
+<dir>
+
+
+<ul>
+<li>read a block, sort, store on Tb1 </li>
+<li>read a block, sort, store on Tb2, </li>
+<li>read a block, sort, store on Tb1, </li>
+<li>etc, alternatively writing on Tb1 and Tb2</li></ul>
+</dir>
+</dir>
+</ul>
+<dir>
+
+<p>Each sorted block is called a <b>run</b>.<br>
+Each output tape will contain half of the runs</p>
+</dir>
+<b></b><p><b>Step 3:</b> Merge:</p>
+<ol type="a">
+<li><b>From Tb1, Tb2 to Ta1, Ta2.</b> <br>
+Merge the first run on Tb1 and the first run on Tb2, and 
+store the result on Ta1:</li>
+<dir>
+<p>Read two records in main memory, compare, store the smaller 
+on Ta1<br>
+<br>Read the next record (from Tb1 or Tb2 - the tape that contained the 
+record <br>
+stored on Ta1) compare, store on Ta1, etc.</p></dir>
+
+
+Merge the second run on Tb1 and the second run on Tb2, 
+store the result on Ta2.<br>
+Merge the third run on Tb1 and the third run on Tb2, 
+store the result on Ta1.<br>
+Etc, storing the result alternatively on Ta1 and Ta2.<p></p>
+<p>Now Ta1 and Ta2 will contain sorted runs twice the size 
+of the previous runs on Tb1 and Tb2</p>
+
+<li><b>From Ta1, Ta2 to Tb1, Tb2.</b> <br>
+Merge the first run on Ta1 and the first run on Ta2, and 
+store the result on Tb1.<br>
+Merge the second run on Ta1 and the second run 
+on Ta2, store the result on Tb2<br>
+Etc, merge and store alternatively on Ta1 and Ta2.</li><p></p>
+
+<li>Repeat the process until only one run is obtained. 
+This would be the sorted file</li>
+</ol>
+</a><p><a name="#basic"></a><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSortEX1.htm">
+Example of a basic external sorting</a></p>
+<!--------------------------------------------------->
+<a name="#analysis">
+<p><b><font size="4" color="navy">
+</font></b></p><li><b><font size="4" color="navy">Analysis of two-way merge<p></p></font></b></li>
+<p></p>
+
+<p>The algorithm requires [log(N/M)] passes plus the initial run-constructing
+pass.</p>
+<p>Each pass merges runs of length r to obtain runs of length 2*r.<br>
+The first runs are of length M. The last run would be of length N.</p>
+<p>Let's assume that N is a multiple of M.</p>
+<p>Initial situation:</p>
+<dir>
+<p>1<sup>st</sup> tape contains N records = M records * N/M runs</p>
+</dir>
+<p>After storing the runs on two tapes, each contains half of the runs:</p>
+<dir>
+<p>2 tapes * M records_per_run * (1/2)(N/M) runs = N records</p>
+</dir>
+<p>After merge 1<sup>st</sup> pass - double the length of the runs, halve the
+number of the runs:</p>
+<dir>
+<p>2 tapes * 2M records_per_run * (1/2)(1/2)(N/M) runs = N records</p>
+</dir>
+<p>After merge 2<sup>nd</sup> pass :</p>
+<dir>
+<p>2 tapes * 4M records_per_run * (1/4)(1/2) (N/M) runs = N records</p>
+</dir>
+<p>......</p>
+<p>After merge s-th pass:</p>
+<dir>
+<p>2 tapes * 2<sup>s</sup> M records_per_run * (1/2<sup>s</sup>)(1/2)(N/M) runs = N
+records</p>
+</dir>
+<p>......</p>
+<p>Thus the length of the runs after the s-th merge is 2<sup>s</sup>M.</p>
+<p>After the last merge there is only one run equal to the whole file:</p>
+<dir>
+<p>2<sup>s</sup>M = N</p>
+<p>2<sup>s</sup> = N/M</p>
+<p>s = log(N/M)</p>
+<p>if s is the last merge, s = log(N/M)</p>
+</dir>
+<p>At each pass we process N records, so the complexity is 
+<b>O(Nlog(N/M))</b></p><b>
+
+<!--------------------------------------------------->
+</b></a><b><a name="#multi">
+<p><b><font size="4" color="navy">
+</font></b></p><li><b><font size="4" color="navy">Multi-way merge<p></p></font></b></li>
+
+</a></b><p><a name="#multi">The basic algorithm is 2-way merge - we use 2 output tapes.</a></p><a name="#multi">
+<p>Assume that we have <b>k </b>tapes - then the number of passes will be reduced - 
+<font size="4">log<b><sub>k</sub></b>(N/M)<br>
+</font>At a given merge step we merge the first <b>k </b>runs, 
+then the second <b>k </b>runs, etc.</p>
+<b></b><p><b>The task here</b>: to find the smallest element out of <b>k</b> elements</p>
+<b></b><p><b>Solution</b>: priority queues</p>
+<b></b><p><b>Idea:</b> Take the smallest elements from the first <b>k</b> 
+runs, <br>store them into main memory 
+in a heap tree. </p>
+<p>Then repeatedly output the smallest element from the heap. <br>
+The smallest element is replaced with the next element 
+from the run from which it came.</p>
+
+When finished with the first set of runs, do the same with the next set of runs.
+</a></ol><a name="#multi">
+
+</a><p><a name="#multi"></a><a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSortEX2.htm">Example of a multi-way merge</a></p>
+</dir>
+<hr color="purple">
+<!---------------------------------------------->
+<dir>
+
+<a name="#goals">
+<p><b><font size="4" color="navy">
+Learning Goals</font></b></p>
+<font size="2">   
+<ul type="disc">
+<li>
+Be able to explain how the basic two-way sort-merge algorithm works.
+</li>
+<li>
+Be able explain how the multiway sort-merge algorithm works <br>
+and why its
+efficiency is improved over the basic algorithm.
+</li>
+
+</ul>
+
+</font></a></dir><a name="#goals"><font size="2">
+
+<!------------------------------------------------>
+</font></a></font></td></tr>
+<tr><td>
+
+<font size="2">
+<hr color="navy">
+<a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/Contents.htm">Back to Contents page</a>
+<hr color="navy">
+Created by <a href="http://faculty.simpson.edu/lydia.sinapova/www/index.htm">Lydia Sinapova</a>
+
+</font>
+
+</td></tr>
+</tbody></table>
+
+
+
+
+
+</font></body></html>

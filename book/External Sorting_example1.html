@@ -1,0 +1,202 @@
+
+<!-- saved from url=(0089)http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSortEX1.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta name="Generator" content="Microsoft Word 97">
+<title>External Sorting</title>
+</head>
+<body link="darkblue" vlink="purple" bgcolor="#660000">
+<font face="Arial" size="2">
+
+<table align="CENTER" cellspacing="0" border="0" cellpadding="7" width="750" background="./External Sorting_example1_files/background.gif">
+<tbody><tr><td align="right">
+<b><p align="right">CmSc 250  Intro to Algorithms</p></b>
+<hr color="navy">
+
+</td></tr>
+<tr><td>
+
+
+<dir>
+
+<b><font face="Arial" size="4"><p>External Sorting</p>
+</font></b><font size="3">
+
+<b><p>Example of Two-Way Sorting: </p>
+
+</b><p>N = 14, M = 3 (14 records on tape Ta1, memory capacity: 3 records.)</p>
+<b>
+</b><p><b>Ta1: </b> <font face="Courier New" size="3">
+17, 3, 29, 56, 24, 18, 4, 9, 10, 6, 45, 36, 11, 43</font></p><font face="Courier New" size="3">
+</font><b>
+<font face="Verdana" size="2">
+</font></b><font face="Verdana" size="2"></font><ol type="A"><font face="Verdana" size="2"><b>
+
+<li>Sorting of runs:</li>
+<font size="2">
+</font></b><font size="2"><ol><b>
+
+<p></p><li>Read 3 records in main memory, sort them and store them on 
+Tb1:</li>
+
+</b><dir><b>
+</b><dir><b>
+
+</b><font face="Courier New" size="3"><p>17, 3, 29  -&gt; 3, 17, 29</p>
+<b>
+<p>Tb1: 3, 17, 29</p>
+</b></font></dir><font face="Courier New" size="3"><b>
+</b></font></dir><font face="Courier New" size="3"><b>
+</b></font><b>
+<li>Read the next 3 records in main memory, sort them and store them 
+on Tb2</li>
+
+</b>
+
+<dir>
+<dir>
+<font face="Courier New" size="3"><p>56, 24, 18  -&gt; 18, 24, 56</p>
+<b>
+<p>Tb2: 18, 24, 56</p>
+</b></font></dir><font face="Courier New" size="3"><b>
+</b></font></dir><font face="Courier New" size="3"><b>
+</b></font><li><b>Read the next 3 records in main memory, 
+sort them and store them on Tb1</b></li><b>
+</b><p><b></b>
+</p><dir>
+<dir>
+<font face="Courier New" size="3">4, 9, 10  -&gt; 4, 9, 10<p></p>
+
+<b></b><p><b>Tb1: </b>3, 17, 29,<b> 4, 9, 10</b></p><b>
+
+</b></font><b>
+</b></dir><b>
+</b></dir><b>
+<li>Read the next 3 records in main memory, 
+sort them and store them on Tb2</li>
+</b>
+<dir>
+<dir>
+<font face="Courier New" size="3">
+<p>6, 45, 36  -&gt; 6, 36, 45</p>
+
+<b></b><p><b>Tb2: </b>18, 24, 56,<b> 6, 36, 45</b></p><b>
+</b></font><b>
+</b></dir><b>
+</b></dir><b>
+<li>Read the next 3 records in main memory, sort them and store them 
+on Tb1</li><br>
+(there are only two records left)<p></p>
+
+</b>
+<dir>
+<dir>
+
+<font face="Courier New" size="3">11, 43  -&gt; 11, 43<p></p>
+<b>
+</b><p><b>Tb1: </b>3, 17, 29,<b> </b>4, 9, 10, <b>11, 43</b></p><b>
+</b></font>
+</dir>
+</dir>
+
+</ol>
+<dir>
+<p>At the end of this process we will have three runs on Tb1 and 
+two runs on Tb2:</p>
+
+<font face="Courier New" size="3"><p><b>Tb1:  </b>3, 17, 29 | 4,  9, 10 | 11, 43</p>
+<b></b><p><b>Tb2: </b>18, 24, 56 |<b> </b>6, 36, 45 |</p>
+</font>
+</dir>
+</font>
+<b>
+
+<!----------------------------------------------------------------->
+<font face="Arial" size="3">
+<li>Merging of runs</li></font></b><font face="Arial" size="3">
+
+</font><p><font face="Arial" size="3"><b>B1. Merging runs of length 3 to obtain runs of length 6. <br></b></font><b>
+</b></p><dir><b>Source tapes:</b> Tb1 and Tb2, result on Ta1 and Ta2.<p></p>
+</dir>
+</font>
+<font size="2">
+<dir>
+<p>Merge the first two runs (on Tb1 and Tb2) and store the result 
+on Ta1.</p>
+
+
+
+<font face="Courier New" size="3"><b></b><p><b>Tb1:  </b>3, 17, 29 |<b> </b>4,  9, 10 | 11, 43</p>
+<b></b><p><b>Tb2: </b>18, 24, 56 |<b> </b>6, 36, 45 |</p>
+</font>
+
+<img src="./External Sorting_example1_files/L17-ExtSortFig01.jpg">
+
+<img src="./External Sorting_example1_files/L17-ExtSortFig02.jpg">
+<img src="./External Sorting_example1_files/L17-ExtSortFig03.jpg">
+<img src="./External Sorting_example1_files/L17-ExtSortFig04.jpg">
+
+<p>Thus we have the first two runs on Ta1 and Ta2, each twice the 
+size of the original runs:</p>
+
+<img src="./External Sorting_example1_files/L17-ExtSortFig05.jpg">
+
+<p>Next we merge the third runs on Tb1 and Tb2 and 
+store the result on Ta1. Since only Tb1 contains a third run, 
+it is copied onto Ta1:</p>
+<img src="./External Sorting_example1_files/L17-ExtSortFig06.jpg">
+
+</dir>
+</font>
+<font size="3">
+<b><p>B2. Merging runs of length 6 to obtain runs of length 12. <br>
+</p></b><dir><b>Source tapes:</b> Ta1 and Ta2. Result on Tb1 and Tb2:<p></p>
+</dir>
+</font>
+<font size="2">
+<dir>
+<p>After merging the first two runs from Ta1 and Ta2, we get a 
+run of length 12, stored on Tb1:</p>
+
+<img src="./External Sorting_example1_files/L17-ExtSortFig07.jpg">
+<p>The second set of runs is only one run, copied to Tb2</p>
+
+<img src="./External Sorting_example1_files/L17-ExtSortFig08.jpg">
+<p>Now on each tape there is only one run. The last step is to 
+merge these two runs and to get the entire file sorted.</p>
+</dir>
+</font>
+<font face="Arial" size="3">
+<b></b></font><p><font face="Arial" size="3"><b>B3. Merging the last two runs.</b> 
+</font>
+</p><dir>
+<p>
+<font size="2">
+The result is:</font></p><font size="2">
+
+<p></p>
+<img src="./External Sorting_example1_files/L17-ExtSortFig09.jpg">
+
+<p>Number of passes: <b>log(N/M)</b></p><b>
+</b>
+</font></dir><font size="2">
+<p>In each pass the size of the runs is doubled, thus we need 
+<b>[log(N/M)]+1 </b>to get to a run equal in size to the original 
+file. This run would be the entire file sorted.</p>
+<p>In the example we needed three passes 
+(B1, B2 and B3) because [Log(14/3)] + 1 = 3. </p>
+
+</font></ol></font></dir><font size="3"><font size="2">
+<!------------------------------------------------>
+</font></font></td></tr>
+<tr><td>
+
+<font size="2">
+<hr color="navy">
+<a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm">Back to External Sort</a><br>
+</font>
+</td></tr>
+</tbody></table>
+
+
+</font></body></html>

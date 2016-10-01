@@ -1,0 +1,186 @@
+
+<!-- saved from url=(0089)http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSortEX2.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<meta name="Generator" content="Microsoft Word 97">
+<title>External Sorting</title>
+</head>
+<body link="darkblue" vlink="purple" bgcolor="#660000">
+<font face="Arial" size="2">
+
+<table align="CENTER" cellspacing="0" border="0" cellpadding="7" width="750" background="./External Sorting_example2_files/background.gif">
+<tbody><tr><td align="right">
+<b><p align="right">CmSc 250  Intro to Algorithms</p></b>
+<hr color="navy">
+
+</td></tr>
+<tr><td>
+
+
+<dir>
+
+<b><font face="Arial" size="4"><p>External Sorting: Example of multiway external sorting</p>
+</font></b>
+<font face="Verdana" size="2">
+<p>Ta1:  <font face="Courier New" size="3">
+17, 3, 29, 56, 24, 18, 4, 9, 10, 6, 45, 36, 11, 43</font></p><font face="Courier New" size="3">
+</font><b>
+<font size="2">
+</font></b><p><font size="2">Assume that we have three tapes (k = 3) and the memory can 
+hold three records.</font></p><font size="2">
+<p></p>
+</font>
+<ol type="A">
+
+<b><li>Main memory sort</li>
+
+</b><p></p>
+<font size="2">
+The first three records are read into memory, sorted and 
+written on Tb1, <br>
+the second three records are read into memory, 
+sorted and stored on Tb2, <br>
+finally the third three records are 
+read into memory, sorted and stored on Tb3. 
+
+
+<p>Now we have one run on each of the three tapes:</p>
+<dir>
+<font face="Courier New" size="3">
+<b></b><p><b>Tb1: </b> 3, 17, 29 </p>
+<p><b>Tb2: </b>18, 24, 56 </p>
+<b></b><p><b>Tb3:   </b>4,  9, 10 </p>
+</font>
+</dir>
+<p>The next portion of three records is sorted into main 
+memory <br>and stored as the second run on Tb1: </p>
+<dir>
+<font face="Courier New" size="3">
+<b></b><p><b>Tb1: </b>3, 17, 29, <b>6, 36, 
+45</b></p>
+</font>
+</dir>
+<p>The next portion, which is also the last one, is sorted and 
+stored onto Tb2:</p>
+<dir>
+<font face="Courier New" size="3">
+<b>
+</b><p><b>Tb2: </b>18, 24, 56, <b>11, 43</b></p><b>
+</b></font><b>
+</b>
+</dir>
+
+<p>Nothing is stored on Tb3.</p>
+
+<p>Thus, after the main memory sort, our tapes look like this:</p>
+
+<font face="Courier New" size="3">
+<b></b><p><b>Tb1: </b>
+3, 17, 29,  |  6, 36, 45, </p>
+<p><b>Tb2: </b>18, 24, 56,  | 11, 43
+</p>
+<b></b><p><b>Tb3: </b>4,  9, 10</p>
+</font>
+
+</font>
+<font size="2">
+<b><li>Merging</li>
+
+
+</b><p><b>B.1. Merging runs of length M to obtain runs of length 
+k*M</b></p>
+</font>
+<font size="2">
+<p>In our example we merge runs of length 3 <br>and the resulting 
+runs would be of length 9.</p>
+
+<ol type="a">
+
+<li>We build a heap tree in main memory 
+out of the first records in each tape. <br>
+These records are: 3, 18, and 4.</li>
+<p></p>
+<li>We take the smallest of them - 3, using the <b>deleteMin</b> 
+operation, <br>and store it on tape Ta1.</li>
+<p>The record '3' belonged to Tb1, so we read the next 
+record from Tb1 - 17, <br>and insert it into the heap. 
+Now the heap contains 18, 4, and 17.</p>
+
+<li>The next <b>deleteMin</b> operation will output 4, 
+and it will be stored on Ta1. 
+<p>The record '4' comes from Tb3, 
+so we read the next record '9' from Tb3 <br>
+and insert it 
+into the heap. <br>Now the heap contains 18, 17 and 9.</p></li>
+<p></p>
+<li>Proceeding in this way, the <font color="darkred">
+<b>first three runs</b></font> will be 
+stored in sorted order on Ta1.</li></ol>
+
+<dir>
+<b></b><p><b>Ta1:</b>  <font face="Courier New" size="3">3, 4, 9, 10, 17, 18, 
+24, 29, 56</font></p>
+
+
+<p>   </p>
+<p>Now it is time to build a heap of the <b><font color="darkred">
+second three runs</font></b>. <br>
+(In fact they are only two, and the run on Tb2 is not complete.)</p>
+
+<p>The resulting sorted run on Ta2 will be:</p>
+
+<b></b><p><b>Ta2:</b>  <font face="Courier New" size="3">6, 11, 36, 43, 45</font></p><font face="Courier New" size="3">
+</font>
+<p>This finishes the first pass.</p>
+</dir>
+</font>
+<font size="2">
+<b><p>B.2. Building runs of length k*k*M</p>
+</b>
+</font>
+<font size="2">
+<p>We have now only two tapes: Ta1 and Ta2. <br>
+</p><ul>
+<li>We build a heap of the 
+first elements of the two tapes - 3 and 6,  <br>
+and output the 
+smallest element '3' to tape Tb1. </li>
+<li>Then we read the next 
+record from the tape where the record '3' belonged - Ta1, <br>
+and insert it into the heap. </li>
+<li>Now the heap contains 6 and 4, 
+and using the <b>deleteMin</b> operation <br>
+the smallest record - 4 
+is output to tape Tb1.</li></ul><p></p>
+
+
+<p>Proceeding in this way, the entire file will be sorted on  
+tape Tb1.</p>
+
+<dir>
+<font face="Courier New" size="3">
+<b></b><p><b>Tb1:</b>  
+3, 4, 6, 9, 10, 11, 17, 18, 24, 29, 36, 43, 45, 56</p></font>
+
+</dir>   
+
+<p>The number of passes for the multiway merging is 
+<font size="4">log<b><sub>k</sub></b>(N/M). </font><font size="2"><br>
+In the example this is 
+</font><font size="4">[log<b><sub>3</sub></b>(14/3)] + 1 = 2.</font></p>
+
+
+</font></ol></font></dir><font face="Verdana" size="2"><font size="2">
+<!------------------------------------------------>
+</font></font></td></tr>
+<tr><td>
+
+<font size="2">
+<hr color="navy">
+<a href="http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm">Back to External Sort</a><br>
+</font></td></tr>
+</tbody></table>
+
+
+
+</font></body></html>

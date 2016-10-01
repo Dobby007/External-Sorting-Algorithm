@@ -18,6 +18,7 @@ First it compares the string part of records and in the case of their equality i
 This algorithm uses two-way merging, described here:
 http://faculty.simpson.edu/lydia.sinapova/www/cmsc250/LN250_Weiss/L17-ExternalSort.htm#analysis
 
+Below is a quote from the URL above (also it can be found in the `book` folder of this repository):
 ====
 The algorithm requires [log(N/M)] passes plus the initial run-constructing pass.
 
