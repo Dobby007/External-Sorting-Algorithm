@@ -1,13 +1,14 @@
 # External Sorting Algorithm
 External sorting algorithm written in C# that can be used for sorting of big files that don't fit into RAM. This specific .NET application sorts files with the following format:
 
-    1. Apple
     415. Apple
-    2. Banana is yellow
-    32. Cherry is the best
     30432. Something something something
+    1. Apple
+    32. Cherry is the best
+    2. Banana is yellow
 
-First it compares the string part of records and in the case of their equality it compares numbers related to each string. So the output  file in the example above will be:
+Each record contains number and corresponding string separated by dot and space.
+First the application compares the string part of records and in the case of their equality it compares numbers related to each string. So the output  file in the example above will be the following:
 
     1. Apple
     415. Apple
